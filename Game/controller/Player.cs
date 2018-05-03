@@ -18,11 +18,15 @@ namespace Game
             units = new List<Unit>();
         }
 
+
         public void addUnit(Unit newUnit)
         {
             units.Add(newUnit);
         }
 
+        /// <summary>
+        /// Prints colorcoded beginning of ownership string
+        /// </summary>
         public void printPlayer()
         {
             switch (id)

@@ -6,28 +6,32 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Archer : Unit
+    class Dragon : Unit
     {
-        public Archer(Player owner, Field at, Pathfinder pf,TurnManager tm):base(owner,at, pf,tm)
+        public Dragon(Player owner, Field at, Pathfinder pf, TurnManager tm, Random rng):base(owner,at, pf, tm, rng)
         {
-            unitName = "Archer";
-            hitPoints = 300;
-            range = 50;
-            attackPriority = 50;
+            unitName = "Dragon";
+            hitPoints = 10000;
+            maxHitPoints = hitPoints;
+            range = 1;
+            attackPriority = 10;
+            movement = 25;
+            flying = true;
+        }
+
+        public Dragon() : base()
+        {
+            unitName = "Dragon";
+            hitPoints = 10000;
+            maxHitPoints = hitPoints;
+            range = 1;
+            attackPriority = 10;
+            flying = true;
         }
 
         public override void attack(Unit target)
         {
-            printUnit();
-            int dmg = attackPower + rng.Next(attackPower);
-            Console.Write("deals "+dmg+" damage to ");
-            target.printUnit();
-            Console.WriteLine();
-            target.hitPoints = target.hitPoints - dmg;
-            if (target.hitPoints <= 0)
-            {
-                target.kill();
-            }
+            throw new NotImplementedException();
         }
 
         public override char getPrintChar()
@@ -45,7 +49,7 @@ namespace Game
                     break;
             }
             
-            return 'A';
+            return 'D';
         }
 
         public override void printUnit()
@@ -63,7 +67,7 @@ namespace Game
                     break;
             }
 
-            Console.Write("Archer on "+pf.indexToCoord(at.xPos)+" "+(at.yPos+1)+" with " + hitPoints+" hit points ");
+            Console.Write("Dragon on "+pf.indexToCoord(at.xPos)+" "+(at.yPos+1)+" with " + hitPoints+" hit points.");
 
             Console.ResetColor();
         }

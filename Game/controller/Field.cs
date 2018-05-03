@@ -3,37 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Game
 {
     class Field : IEquatable<Field>
     {
+        /// <summary>
+        /// Used for drawing yellow chars on map
+        /// </summary>
         public bool isOnPath
         {
             get;set;
         }
+        /// <summary>
+        /// Every field has 3 neighbours
+        /// </summary>
         public List<Field> neighbours { get; set; }
+        /// <summary>
+        /// If the field is passable by walking units
+        /// </summary>
         public bool passable { get; set; }
 
-        public Field pathParent
-        {
-            get;set;
-        }
-
-        public double distanceToPathTarget
-        {
-            get;set;
-        }
-
-        public int costFromPathSource
-        {
-            get;set;
-        }
+        /// <summary>
+        /// If the field is passable by flying units
+        /// </summary>
         public bool flyOverAble
         {
             get;set;
         }
-        public int movementPrice { get; set; }
+      
 
         public int xPos
         {
@@ -44,24 +43,48 @@ namespace Game
             get;
         }
 
+        /// <summary>
+        /// Movement cost that the units has to pay for moving through this field
+        /// Currently 1 for all fields
+        /// </summary>
         public int cost
         {
             get;set;
         }
 
+        /// <summary>
+        /// Reference on unit that is located on this field
+        /// </summary>
         Unit occupant = null;
+
+        /// <summary>
+        /// Reference on unit that is only moving through the field
+        /// If flying unit is passing over field with unit already on
+        /// </summary>
+        public Unit passingThrough
+        {
+            get;set;
+        }
+        /// <summary>
+        /// Creates basic passable field
+        /// </summary>
+        /// <param name="i">Index of row</param>
+        /// <param name="j">Index of column</param>
         public Field(int i, int j)
         {
-            this.isOnPath = false;
-            this.cost = 1;
-            this.xPos = j;
-            this.yPos = i;
-            this.passable = true;
-            this.flyOverAble = true;
-            this.movementPrice = 1;
-            this.neighbours = new List<Field>();
+           isOnPath = false;
+           cost = 1;
+           xPos = j;
+           yPos = i;
+           passable = true;
+           flyOverAble = true;
+           neighbours = new List<Field>();
         }
        
+        /// <summary>
+        /// Returns if this field is occupied
+        /// </summary>
+        /// <returns>True if it has occupant, false otherwise</returns>
         public bool isOccupied()
         {
             if (occupant is null)
@@ -74,6 +97,10 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Checks if the field is occupied and if it was empty sets occupant
+        /// </summary>
+        /// <param name="newUnit">New occupant</param>
         public void setOccupant(Unit newUnit)
         {
             if (!isOccupied())
@@ -114,11 +141,15 @@ namespace Game
 
         public virtual char getPrintChar()
         {
-            if (isOccupied())
+            if (passingThrough != null)
+            {
+                return passingThrough.getPrintChar();
+            }
+            else if (isOccupied())
             {
                 return occupant.getPrintChar();
             }
-            if (isOnPath)
+            else if (isOnPath)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -145,9 +176,14 @@ namespace Game
         public override int GetHashCode()
         {
             int result = 0;
-            result = (result * 397) ^ this.xPos;
-            result = (result * 397) ^ this.yPos;
+            result += 1000 * this.xPos;
+            result += this.yPos;
             return result;
+        }
+
+        public override string ToString()
+        {
+            return this.GetType().ToString() + " ["+xPos+","+yPos+ "]"; 
         }
     }
 }

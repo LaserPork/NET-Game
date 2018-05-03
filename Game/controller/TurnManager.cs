@@ -8,8 +8,16 @@ namespace Game
 {
     class TurnManager
     {
-        List<Unit> playingUnits;
+
+        public List<Unit> playingUnits
+        {
+            get; set;
+        }
         private Random rng = new Random();
+        /// <summary>
+        /// Index into playingUnits pointing at current playing unit
+        /// Loops.
+        /// </summary>
         private int current;
         List<Player> players;
         public TurnManager(List<Player> players)
@@ -19,6 +27,11 @@ namespace Game
             playingUnits = new List<Unit>();
         }
 
+        /// <summary>
+        /// Creates circular list of playing units
+        /// thats is ordered by unit speed
+        /// for same speed units it is randomized
+        /// </summary>
         public void createAttackPriorityList()
         {
             foreach (Player p in players)
@@ -29,6 +42,11 @@ namespace Game
             playingUnits = playingUnits.OrderBy(o => o.attackPriority).ToList();
         }
 
+        /// <summary>
+        /// Pops top unit from the list and puts her on 
+        /// the bottom of the turn queue
+        /// </summary>
+        /// <returns></returns>
         public Unit popUnit()
         {
             Unit u = playingUnits[current];
@@ -36,12 +54,21 @@ namespace Game
             return u;
         }
 
-
+        /// <summary>
+        /// Peeks the queue for the current unit
+        /// without chaning the turn oreder
+        /// </summary>
+        /// <returns></returns>
         public Unit peekUnit()
         {
             return playingUnits[current];
         }
 
+        /// <summary>
+        /// Removes unit from the circular turn queue
+        /// Used when unit dies
+        /// </summary>
+        /// <param name="killed"></param>
         public void removeUnit(Unit killed)
         {
             int i = playingUnits.IndexOf(killed);
@@ -49,11 +76,13 @@ namespace Game
             {
                 throw new Exception("Unit was not registered in the turn list.");
             }
+            
             playingUnits.RemoveAt(i);
-            if (i < current)
+            if (i <= current)
             {
                 current--;
             }
+
 
             bool[] hasUnits = new bool[players.Count];
             int playerWithUnitCount = 0;
@@ -76,6 +105,9 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Prints the turn order of units in game
+        /// </summary>
         public void printQueue()
         {
             for (int i = 0; i < playingUnits.Count; i++)
@@ -84,6 +116,11 @@ namespace Game
                 Console.WriteLine();
             }
         }
+
+        /// <summary>
+        /// Randomizes the queue order
+        /// </summary>
+        /// <param name="list"></param>
         public void shuffle(List<Unit> list)
         {
             int n = list.Count;
@@ -97,6 +134,9 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Finds out what player won
+        /// </summary>
         public void endGame()
         {
             playingUnits[0].owner.printPlayer();

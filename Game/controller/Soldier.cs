@@ -9,7 +9,12 @@ namespace Game
     class Soldier : Unit
     {
 
-        public Soldier(Player owner, Field at, Pathfinder pf, TurnManager tm) : base(owner,at,pf, tm)
+        public Soldier(Player owner, Field at, Pathfinder pf, TurnManager tm, Random rng) : base(owner,at,pf, tm, rng)
+        {
+
+        }
+
+        public Soldier() : base()
         {
 
         }

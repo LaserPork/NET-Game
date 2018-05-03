@@ -1,0 +1,10 @@
+C:\Users\jakub\source\repos\Game\Game\bin\Release\Game.exe.config
+C:\Users\jakub\source\repos\Game\Game\bin\Release\Game.exe
+C:\Users\jakub\source\repos\Game\Game\bin\Release\Game.pdb
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.csproj.CoreCompileInputs.cache
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.exe
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.pdb
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.csprojResolveAssemblyReference.cache
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.view.Window.resources
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.csproj.GenerateResource.Cache
+C:\Users\jakub\source\repos\Game\Game\obj\Release\Game.Properties.Resources.resources

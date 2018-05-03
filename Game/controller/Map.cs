@@ -18,6 +18,11 @@ namespace Game
         }
 
         public List<List<Field>> allFields{ get; set;}
+        /// <summary>
+        /// Creates rectangle map, with proper links between fields
+        /// </summary>
+        /// <param name="mapHeight">Number of rows</param>
+        /// <param name="mapWidth">Number of columns</param>
         public Map(int mapHeight, int mapWidth)
         {
             this.mapHeight = mapHeight;
@@ -33,7 +38,12 @@ namespace Game
                 }
             }
         }
-
+        /// <summary>
+        /// Swithces 2 fields.
+        /// Used for changing current field to wall
+        /// </summary>
+        /// <param name="oldField">Reference on new field</param>
+        /// <param name="newField">Reference on current field located on Map</param>
         public void changeFields(Field oldField, Field newField)
         {
             allFields[oldField.yPos][oldField.xPos] = newField;
@@ -44,6 +54,10 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Hardcoded way to print colored map into console
+        /// Wont be used in final game
+        /// </summary>
         public void printMap()
         {
             Console.BackgroundColor = ConsoleColor.Black;
@@ -145,6 +159,12 @@ namespace Game
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Used for creating links between Fields on a Map
+        /// Works only for a rectange map
+        /// </summary>
+        /// <param name="i">Index of row in map</param>
+        /// <param name="j">Index of column in map</param>
         public void setFieldsNeighbours(int i, int j)
         {
             //pridani horizonatlni vazby na pole vlevo a zleva
